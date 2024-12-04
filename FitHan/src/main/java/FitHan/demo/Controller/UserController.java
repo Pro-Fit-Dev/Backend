@@ -56,16 +56,16 @@ public class UserController {
     /**
      * 닉네임 변경
      *
-     * @param phoneNumber 사용자 휴대폰번호
+     * @param userId 사용자 개인 ID
      * @param nickName    변경할 닉네임
      * @return 성공 메시지 또는 오류 메시지
      */
     @PutMapping("/nickname")
     public ResponseEntity<String> updateNickName(
-        @RequestParam String phoneNumber,
+        @RequestParam String userId,
         @RequestParam String nickName) {
         try {
-            User updatedUser = userService.updateNickName(phoneNumber, nickName);
+            User updatedUser = userService.updateNickName(userId, nickName);
             return ResponseEntity.ok("닉네임이 성공적으로 변경되었습니다: " + updatedUser.getNickName());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -75,18 +75,18 @@ public class UserController {
     /**
      * 비밀번호 변경
      *
-     * @param phoneNumber 사용자 휴대폰번호
+     * @param userId 사용자 개인 ID
      * @param password    사용자 기존 비밀번호
      * @param newPassword 새로운 비밀번호
      * @return 성공 메시지 또는 오류 메시지
      */
     @PutMapping("/password")
     public ResponseEntity<String> updatePassword(
-        @RequestParam String phoneNumber,
+        @RequestParam String userId,
         @RequestParam String password,
         @RequestParam String newPassword) {
         try {
-            userService.updatePassword(phoneNumber, password, newPassword);
+            userService.updatePassword(userId, password, newPassword);
             return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -96,13 +96,13 @@ public class UserController {
     /**
      * 사용자 BMI 정보 반환
      *
-     * @param phoneNumber 유저의 휴대폰 번호
+     * @param userId 회원 개인 ID
      * @return 키와 몸무게 정보
      */
     @GetMapping("/bmi")
-    public ResponseEntity<Map<String, Double>> getUserBmiInfo(@RequestParam String phoneNumber) {
+    public ResponseEntity<Map<String, Double>> getUserBmiInfo(@RequestParam String userId) {
         try {
-            User user = userService.getUserBmiInfo(phoneNumber);
+            User user = userService.getUserBmiInfo(userId);
 
             // 키와 몸무게를 Map에 담아서 반환
             Map<String, Double> response = new HashMap<>();
