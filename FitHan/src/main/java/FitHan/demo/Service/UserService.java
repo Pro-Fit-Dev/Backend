@@ -59,7 +59,7 @@ public class UserService {
 
         // 3. 비밀번호 일치 여부 확인
         if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("기본 비밀번호와 일치하지 않습니다.");
         }
 
         // 4. 로그인 성공, 사용자 휴대폰 번호 반환
@@ -69,17 +69,17 @@ public class UserService {
 
     /** 닉네임 변경
      *
-     * @param phoneNumber   사용자 휴대폰번호 (확인용)
+     * @param userId  사용자 개인 ID (유저 확인용)
      * @param nickName  변경할 닉네임
      * @return 저장한 유저 객체
      */
     @Transactional
-    public User updateNickName(String phoneNumber, String nickName) {
+    public User updateNickName(String userId, String nickName) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByPhoneNumber(phoneNumber);
+        User user = userRepository.findByUser_id(userId);
 
         if (user == null) {
-            throw new IllegalArgumentException("해당 휴대폰 번호를 가진 사용자가 존재하지 않습니다.");
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
 
         // 2. 닉네임 중복 확인 (필요시 추가)
@@ -95,15 +95,16 @@ public class UserService {
     }
 
 
-    /**
-     * @param phoneNumber 사용자 휴대폰 (확인용)
+    /** 비밀번호 재설정
+     *
+     * @param userId 사용자 개인 ID (확인용)
      * @param password    사용자 기존 비밀번호
      * @param newPassword 새로운 비밀번호
      */
     @Transactional
-    public void updatePassword(String phoneNumber, String password, String newPassword) {
+    public void updatePassword(String userId, String password, String newPassword) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByPhoneNumber(phoneNumber);
+        User user = userRepository.findByUser_id(userId);
 
         if (user == null) {
             throw new IllegalArgumentException("해당 휴대폰 번호를 가진 사용자가 존재하지 않습니다.");
@@ -123,16 +124,16 @@ public class UserService {
 
     /** 사용자의 BMI 정보
      *
-     * @param phoneNumber 사용자의 휴대폰 번호
+     * @param userId 사용자의 개인 ID (확인용)
      * @return 사용자의 키와 몸무게
      */
     @Transactional
-    public User getUserBmiInfo(String phoneNumber) {
+    public User getUserBmiInfo(String userId) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByPhoneNumber(phoneNumber);
+        User user = userRepository.findByUser_id(userId);
 
         if (user == null) {
-            throw new IllegalArgumentException("해당 휴대폰 번호를 가진 사용자가 존재하지 않습니다.");
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
 
         // 2. 사용자 객체 반환 (키와 몸무게 포함)

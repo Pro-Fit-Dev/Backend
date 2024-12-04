@@ -9,6 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User save(User user);
 
+    User findByUser_id(String userID);
     User findByPhoneNumber(String phoneNumber);
 
     boolean existsByNickName(String nickName);
