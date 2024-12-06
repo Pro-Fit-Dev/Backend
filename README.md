@@ -1,5 +1,10 @@
 # 💻Backend.git
 **프로젝트 설명**
+Lombok 
+Spring Boot DevTools
+Spring Web
+Spring Data JPA
+MySQL Driver 
 
 ## 🚀 소개
 ### 프로젝트 소개
