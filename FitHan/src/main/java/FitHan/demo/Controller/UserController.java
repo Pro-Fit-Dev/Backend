@@ -1,19 +1,20 @@
-package com.profit.ProFit.Controller;
+package FitHan.demo.Controller;
 
-import com.profit.ProFit.Model.User;
-import com.profit.ProFit.Service.UserService;
+import FitHan.demo.Model.User;
+import FitHan.demo.Service.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
@@ -98,5 +99,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package FitHan.demo.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,26 +22,27 @@ public class User {
     private Integer userId;
 
     private String username;
+
+    @JsonIgnore
     private String password;
+
     private String phoneNumber;
     private String birthDay;
     private String gender;
-    private Double height;
-    private Double weight;
     private String nickName;
+    private String disability;
 
     public User() { }
 
     public User(String username, String password, String phoneNumber, String birthDay,
-        String gender, Double height, Double weight, String nickName) {
+        String gender, String nickName, String disability) {
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.birthDay = birthDay;
         this.gender = gender;
-        this.height = height;
-        this.weight = weight;
         this.nickName = nickName;
+        this.disability = disability;
     }
 
 }
