@@ -2,6 +2,7 @@ package FitHan.demo.Controller;
 
 import FitHan.demo.Model.User;
 import FitHan.demo.Service.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class UserController {
         }
     }
 
+
     /**
      * 로그인
      *
@@ -53,6 +55,7 @@ public class UserController {
         return ResponseEntity.ok("로그인 성공! 휴대폰 번호: " + userPhoneNumber);
     }
 
+
     /**
      * 닉네임 변경
      *
@@ -62,7 +65,7 @@ public class UserController {
      */
     @PutMapping("/nickname")
     public ResponseEntity<String> updateNickName(
-        @RequestParam String userId,
+        @RequestParam Integer userId,
         @RequestParam String nickName) {
         try {
             User updatedUser = userService.updateNickName(userId, nickName);
@@ -71,6 +74,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     /**
      * 비밀번호 변경
@@ -82,7 +86,7 @@ public class UserController {
      */
     @PutMapping("/password")
     public ResponseEntity<String> updatePassword(
-        @RequestParam String userId,
+        @RequestParam Integer userId,
         @RequestParam String password,
         @RequestParam String newPassword) {
         try {
@@ -93,6 +97,7 @@ public class UserController {
         }
     }
 
+
     /**
      * 사용자 BMI 정보 반환
      *
@@ -100,7 +105,7 @@ public class UserController {
      * @return 키와 몸무게 정보
      */
     @GetMapping("/bmi")
-    public ResponseEntity<Map<String, Double>> getUserBmiInfo(@RequestParam String userId) {
+    public ResponseEntity<Map<String, Double>> getUserBmiInfo(@RequestParam Integer userId) {
         try {
             User user = userService.getUserBmiInfo(userId);
 
