@@ -1,12 +1,11 @@
-package FitHan.demo.Repository;
+package com.profit.ProFit.Repository;
 
-import FitHan.demo.Model.User;
+import com.profit.ProFit.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
+public interface UserRepository extends JpaRepository<User, Integer> {
     User save(User user);
 
     User findByUserId(Integer userId);

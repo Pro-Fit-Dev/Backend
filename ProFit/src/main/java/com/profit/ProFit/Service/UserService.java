@@ -1,7 +1,7 @@
-package FitHan.demo.Service;
+package com.profit.ProFit.Service;
 
-import FitHan.demo.Model.User;
-import FitHan.demo.Repository.UserRepository;
+import com.profit.ProFit.Model.User;
+import com.profit.ProFit.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -45,10 +45,10 @@ public class UserService {
      *
      * @param phoneNumber 유저의 휴대폰 번호
      * @param password  유저의 비밀번호
-     * @return 사용자 ID
+     * @return 휴대폰 번호
      */
     @Transactional
-    public User login(String phoneNumber, String password) {
+    public String login(String phoneNumber, String password) {
         // 1. 휴대폰 번호로 사용자 조회
         User user = userRepository.findByPhoneNumber(phoneNumber);
 
@@ -59,11 +59,11 @@ public class UserService {
 
         // 3. 비밀번호 일치 여부 확인
         if (!user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("기본 비밀번호와 일치하지 않습니다.");
         }
 
-        // 4. 로그인 성공, User 객체 반환
-        return user;
+        // 4. 로그인 성공, 사용자 휴대폰 번호 반환
+        return user.getPhoneNumber();
     }
 
 
@@ -122,20 +122,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-    /**
-     * 사용자 ID를 통해 장애 여부를 확인합니다.
+    /** 사용자의 BMI 정보
      *
-     * @param userId 사용자 ID
-     * @return "Yes": 장애인, "No": 비장애인
+     * @param userId 사용자의 개인 ID (확인용)
+     * @return 사용자의 키와 몸무게
      */
-    public String getUserDisabilityStatus(Integer userId) {
-        // 예제: 데이터베이스에서 사용자 장애 여부를 확인하는 로직
-        // 실제로는 사용자 정보를 DB에서 조회하여 disability 값을 반환하도록 구현
-        // 예: return userRepository.findById(userId).map(User::getDisability).orElse("No");
+    @Transactional
+    public User getUserBmiInfo(Integer userId) {
+        // 1. 휴대폰 번호로 사용자 조회
+        User user = userRepository.findByUserId(userId);
 
-        // 테스트용으로 임의의 값 반환
-        return userId % 2 == 0 ? "Yes" : "No"; // 예: 짝수 ID는 장애인(Yes), 홀수 ID는 비장애인(No)
+        if (user == null) {
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+
+        // 2. 사용자 객체 반환 (키와 몸무게 포함)
+        return user;
     }
-
 
 }
