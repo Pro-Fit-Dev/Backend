@@ -74,9 +74,9 @@ public class UserService {
      * @return 저장한 유저 객체
      */
     @Transactional
-    public User updateNickName(String userId, String nickName) {
+    public User updateNickName(Integer userId, String nickName) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByUser_id(userId);
+        User user = userRepository.findByUserId(userId);
 
         if (user == null) {
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
@@ -102,9 +102,9 @@ public class UserService {
      * @param newPassword 새로운 비밀번호
      */
     @Transactional
-    public void updatePassword(String userId, String password, String newPassword) {
+    public void updatePassword(Integer userId, String password, String newPassword) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByUser_id(userId);
+        User user = userRepository.findByUserId(userId);
 
         if (user == null) {
             throw new IllegalArgumentException("해당 휴대폰 번호를 가진 사용자가 존재하지 않습니다.");
@@ -128,9 +128,9 @@ public class UserService {
      * @return 사용자의 키와 몸무게
      */
     @Transactional
-    public User getUserBmiInfo(String userId) {
+    public User getUserBmiInfo(Integer userId) {
         // 1. 휴대폰 번호로 사용자 조회
-        User user = userRepository.findByUser_id(userId);
+        User user = userRepository.findByUserId(userId);
 
         if (user == null) {
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
