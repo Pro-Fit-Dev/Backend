@@ -1,4 +1,4 @@
-package FitHan.demo.Model;
+package com.profit.ProFit.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,27 +20,36 @@ public class Community {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "community_id")
-    private Integer community_id;
+    private Integer communityId;
 
     private String tag;
     private String title;
     private String contents;
-    private Integer headCount;      //총 참가인원
-    private Integer attendanceCount;
+
+    @Column(name = "comment_count", nullable = false)
+    private Integer commentCount = 0; // 기본값 0
 
     @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "user_id")
-    private User author;
+    private com.profit.ProFit.Model.User author;
 
     public Community() {}
 
-    public Community(String tag, String title, String contents, int headCount, int attendanceCount,
-        User author) {
+    public Community(String tag, String title, String contents,Integer commentCount,
+        com.profit.ProFit.Model.User author) {
         this.tag = tag;
         this.title = title;
         this.contents = contents;
-        this.headCount = headCount;
-        this.attendanceCount = attendanceCount;
         this.author = author;
+        this.commentCount = 0;
     }
+
+    // 댓글 수 증가 메서드
+    public void incrementCommentCount() {
+        if (this.commentCount == null) {
+            this.commentCount = 0; // null이면 0으로 초기화
+        }
+        this.commentCount++;
+    }
+
 }
